@@ -1,13 +1,24 @@
-#!/usr/bin/env python
-"""Django's command-line utility for administrative tasks."""
+# backend/app/manage.py
+
 import os
 import sys
 
-
 def main():
-    """Run administrative tasks."""
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "app.settings")
+    # Add the app directory and backend directory to the Python path
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..')))
+    
+    print("Python Path:", sys.path)  # Debug statement to check paths
+
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'app.settings')
+    
+    print("Selected DJANGO_ENV:", os.getenv('DJANGO_ENV'))  # Debug statement to check DJANGO_ENV
+    print("Selected DJANGO_SETTINGS_MODULE:", os.getenv('DJANGO_SETTINGS_MODULE'))  # Debug statement to check DJANGO_SETTINGS_MODULE
+    
     try:
+        from django.conf import settings
+        print("Database Settings:", settings.DATABASES)  # Debug statement to check database settings
+        
         from django.core.management import execute_from_command_line
     except ImportError as exc:
         raise ImportError(
@@ -17,6 +28,5 @@ def main():
         ) from exc
     execute_from_command_line(sys.argv)
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
